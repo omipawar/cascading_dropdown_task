@@ -145,8 +145,11 @@ export class AppComponent implements OnInit {
       })
       this.api.getAll("http://awsmaster.mahamining.com/master/villages/GetVillagesByCriteria/" + this.mytalukaid).subscribe((result: any) => {
         this.village = result.responseData;
-
+        this.api.deleteRecord("http://localhost:3000/records/"+id).subscribe((data:any)=>{
+          
+        });
       });
+
     });
   }
 
