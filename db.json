@@ -1,0 +1,38 @@
+{
+  "records": [
+    {
+      "state": "Maharashtra",
+      "division": "Amravati",
+      "district": "Pune",
+      "taluka": "Ambegaon",
+      "village": "Bhawadi",
+      "id": 1
+    },
+    {
+      "state": "Maharashtra",
+      "division": "Nashik",
+      "district": "Raigad",
+      "taluka": "Murud",
+      "village": "Dongari",
+      "id": 3
+    },
+    {
+      "state": "Maharashtra",
+      "division": "Kokan",
+      "district": "Washim",
+      "taluka": "Malegaon",
+      "village": "Bramhanwada Kh.",
+      "id": 4
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

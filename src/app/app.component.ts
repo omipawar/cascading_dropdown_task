@@ -14,13 +14,15 @@ export class AppComponent implements OnInit {
   divisions: any;
   districts: any;
   taluka: any;
-  village:any;
-  records:any;
+  village: any;
+  records: any;
+  allRecords :any;
 
   constructor(private api: ApiService) { }
 
   ngOnInit(): void {
     this.showAll();
+    this.getRecords();
 
     this.records = new FormGroup({
       state: new FormControl(""),
@@ -28,12 +30,11 @@ export class AppComponent implements OnInit {
       district: new FormControl(""),
       taluka: new FormControl(""),
       village: new FormControl("")
-    })
-
+    });
   }
-  submitdata(records:any){
+  submitdata(records: any) {
     alert("Hello")
-   }
+  }
 
   showAll() {
     this.api.getAll("http://awsmaster.mahamining.com/master/states/GetState").subscribe((data: any) => {
@@ -80,15 +81,55 @@ export class AppComponent implements OnInit {
     });
   }
 
-  save()
-  {
+  save() {
+    // json-server --watch db.json
+    // npm i -g json-server
+
     let stateSelect = <HTMLSelectElement>document.getElementById("state");
-    let state =  stateSelect.options[stateSelect.selectedIndex].text;
+    let state = stateSelect.options[stateSelect.selectedIndex].text;
+
     let divisionselect = <HTMLSelectElement>document.getElementById("division");
-    let division =  divisionselect.options[divisionselect.selectedIndex].text;
-    alert(division);
+    let division = divisionselect.options[divisionselect.selectedIndex].text;
+
+    let districtselect = <HTMLSelectElement>document.getElementById("district");
+    let district = districtselect.options[districtselect.selectedIndex].text;
+
+    let talukaselect = <HTMLSelectElement>document.getElementById("taluka");
+    let taluka = talukaselect.options[talukaselect.selectedIndex].text;
+
+    let villageselect = <HTMLSelectElement>document.getElementById("village");
+    let village = villageselect.options[villageselect.selectedIndex].text;
+
+    let data = { state: state, division: division, district: district, taluka: taluka, village: village };
+    // console.log(data);
+
+    this.api.postRecord(data).subscribe((data:any)=>{
+      console.log(data);
+      alert("data added")
+      window.location.href="/records";
+    });
+
+  }
+  getRecords(){
+    this.api.getAll("http://localhost:3000/records/").subscribe((data:any)=>{
+    // console.log(data);
+    this.allRecords = data;
+    });
   }
 
+  editProduct(id:any){
+    this.api.getRecord("http://localhost:3000/records/"+id).subscribe((data:any)=>{
+    console.log(data);
+
+    });
+  }
+
+  deleteproduct(id:any){
+    this.api.deleteRecord("http://localhost:3000/records/"+id).subscribe((data:any)=>{
+    console.log(data);
+    window.location.href="/records";
+    });
+  }
 
 
 

@@ -30,7 +30,7 @@
           </tr>
           <tr>
             <td>
-              <select class="form-control" (change)="distchange($event)">
+              <select id="district" class="form-control" (change)="distchange($event)">
                 <option value="">Select District</option>
                 <option *ngFor="let dist of districts; let i=index;" value="{{dist.id}}">{{dist.district}}</option>
               </select>
@@ -41,7 +41,7 @@
           </tr>
           <tr>
             <td>
-              <select class="form-control" (change)="talukachange($event)">
+              <select id="taluka" class="form-control" (change)="talukachange($event)">
                 <option value="">Select Taluka</option>
                 <option *ngFor="let t of taluka; let i=index;" value="{{t.id}}">{{t.taluka}}</option>
               </select>
@@ -52,7 +52,7 @@
           </tr>
           <tr>
             <td>
-              <select class="form-control">
+              <select id="village" class="form-control">
                 <option value="">Select Village</option>
                 <option *ngFor="let v of village; let i=index;" value="{{v.id}}">{{v.name}}</option>
               </select>
@@ -60,15 +60,15 @@
           </tr>
           <tr>
             <td><a class="btn btn-secondary mt-3">Clear</a>
-              <button type="submit" (click)="save()">submit</button>
+              <button type="submit" class="btn btn-primary mt-3 ms-4" (click)="save()">submit</button>
             </td>
           </tr>
         </table>
       </div>
       <div class="col-lg-9 mt-3 ">
 
-        <table class="table">
-          <tr class="bg-dark text-light p-3">
+        <table class="table p-5">
+          <tr>
             <th class="h2 text-center">Sr. No.</th>
             <th class="h2 text-center">State</th>
             <th class="h2 text-center">Division</th>
@@ -77,16 +77,17 @@
             <th class="h2 text-center">Village</th>
             <th class="h2 text-center">Edit/Delete</th>
           </tr>
-          <tr>
-            <td class="h4 text-center">1</td>
-            <td class="h4 text-center">State</td>
-            <td class="h4 text-center">Division</td>
-            <td class="h4 text-center">District</td>
-            <td class="h4 text-center">Taluka</td>
-            <td class="h4 text-center">Village</td>
+          <tr *ngFor="let r of allRecords; let i =index;">
+            <td class="h4 text-center">{{i+1}}</td>
+            <td class="h4 text-center">{{r.state}}</td>
+            <td class="h4 text-center">{{r.division}}</td>
+            <td class="h4 text-center">{{r.district}}</td>
+            <td class="h4 text-center">{{r.taluka}}</td>
+            <td class="h4 text-center">{{r.village}}</td>
             <td class="h4 text-center">
-              <a href="" class="btn bg-primary"><i class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></a>
-              <a class="btn bg-danger ms-3"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+              <button class="btn bg-primary" routerLink="/records/{{r.id}}" (click)="editProduct(r.id)"><i class="fa fa-pencil-square fa-2x"
+                  aria-hidden="true"></i></button>
+              <button class="btn bg-danger ms-3" (click)="deleteproduct(r.id)"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
             </td>
           </tr>
         </table>
