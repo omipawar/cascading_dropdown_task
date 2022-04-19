@@ -8,7 +8,7 @@
           </tr>
           <tr>
             <td>
-              <select class="form-control " id="state" (change)="statechanged($event)">
+              <select class="form-control " id="state" (change)="statechanged($event)" value="{{mystateid}}">
                 <option value="">Select State</option>
                 <option *ngFor="let s of states; let i = index;" value="{{s.id}}">{{s.state}}</option>
               </select>
@@ -19,7 +19,7 @@
           </tr>
           <tr>
             <td>
-              <select class="form-control" (change)="divchange($event)" id="division">
+              <select class="form-control" (change)="divchange($event)" id="division" >
                 <option value="">Select division</option>
                 <option *ngFor="let d of divisions; let i = index;" value="{{d.divCode}}">{{d.division}}</option>
               </select>
@@ -30,7 +30,7 @@
           </tr>
           <tr>
             <td>
-              <select id="district" class="form-control" (change)="distchange($event)">
+              <select id="district" class="form-control" (change)="distchange($event)" >
                 <option value="">Select District</option>
                 <option *ngFor="let dist of districts; let i=index;" value="{{dist.id}}">{{dist.district}}</option>
               </select>
@@ -52,7 +52,7 @@
           </tr>
           <tr>
             <td>
-              <select id="village" class="form-control">
+              <select id="village" class="form-control" >
                 <option value="">Select Village</option>
                 <option *ngFor="let v of village; let i=index;" value="{{v.id}}">{{v.name}}</option>
               </select>
@@ -85,9 +85,10 @@
             <td class="h4 text-center">{{r.taluka}}</td>
             <td class="h4 text-center">{{r.village}}</td>
             <td class="h4 text-center">
-              <button class="btn bg-primary" routerLink="/records/{{r.id}}" (click)="editProduct(r.id)"><i class="fa fa-pencil-square fa-2x"
+              <button class="btn bg-primary" routerLink="/records/{{r.id}}" (click)="editProduct(r.id)"><i
+                  class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></button>
+              <button class="btn bg-danger ms-3" (click)="deleteproduct(r.id)"><i class="fa fa-trash fa-2x"
                   aria-hidden="true"></i></button>
-              <button class="btn bg-danger ms-3" (click)="deleteproduct(r.id)"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></button>
             </td>
           </tr>
         </table>

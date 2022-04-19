@@ -16,7 +16,13 @@ export class AppComponent implements OnInit {
   taluka: any;
   village: any;
   records: any;
-  allRecords :any;
+  allRecords: any;
+
+  mystateid = 0;
+  mydivisionid = 0;
+  mydistrictid = 0;
+  mytalukaid = 0;
+  myvillageid = 0;
 
   constructor(private api: ApiService) { }
 
@@ -100,35 +106,57 @@ export class AppComponent implements OnInit {
     let villageselect = <HTMLSelectElement>document.getElementById("village");
     let village = villageselect.options[villageselect.selectedIndex].text;
 
-    let data = { state: state, division: division, district: district, taluka: taluka, village: village };
+    let data = { state: state, stateid: stateSelect.value, division: division, divisionid: divisionselect.value, district: district, districtid: districtselect.value, taluka: taluka, talukaid: talukaselect.value, village: village, villageid: villageselect.value };
     // console.log(data);
 
-    this.api.postRecord(data).subscribe((data:any)=>{
+    this.api.postRecord(data).subscribe((data: any) => {
       console.log(data);
       alert("data added")
-      window.location.href="/records";
+      window.location.href = "/records";
     });
 
   }
-  getRecords(){
-    this.api.getAll("http://localhost:3000/records/").subscribe((data:any)=>{
-    // console.log(data);
-    this.allRecords = data;
+  getRecords() {
+    this.api.getAll("http://localhost:3000/records/").subscribe((data: any) => {
+      // console.log(data);
+      this.allRecords = data;
     });
   }
 
-  editProduct(id:any){
-    this.api.getRecord("http://localhost:3000/records/"+id).subscribe((data:any)=>{
-    console.log(data);
+  editProduct(id: any) {
+    this.api.getRecord("http://localhost:3000/records/" + id).subscribe((data: any) => {
+      // console.log(data);
+      this.mystateid = data.stateid;
+      this.mydivisionid = data.divisionid;
+      this.mydistrictid = data.districtid;
+      this.mytalukaid = data.talukaid;
+      this.myvillageid = data.villageid;
 
+      this.api.getAll("http://awsmaster.mahamining.com/master/divisions/" + this.mystateid).subscribe((result: any) => {
+        this.divisions = result.responseData;
+        // console.log(this.divisions);
+
+      });
+      this.api.getAll("http://awsmaster.mahamining.com/master/divisions/" + this.mystateid).subscribe((result: any) => {
+        this.districts = result.responseData;
+      });
+      this.api.getAll("http://awsmaster.mahamining.com/master/talukas/GetTalukaByDistrictId/" + this.mydistrictid).subscribe((result: any) => {
+        this.taluka = result.responseData;
+      })
+      this.api.getAll("http://awsmaster.mahamining.com/master/villages/GetVillagesByCriteria/" + this.mytalukaid).subscribe((result: any) => {
+        this.village = result.responseData;
+
+      });
     });
   }
 
-  deleteproduct(id:any){
-    this.api.deleteRecord("http://localhost:3000/records/"+id).subscribe((data:any)=>{
-    console.log(data);
-    window.location.href="/records";
+  deleteproduct(id: any) {
+    confirm("Sure to delete")
+    this.api.deleteRecord("http://localhost:3000/records/" + id).subscribe((data: any) => {
+      // console.log(data);
+      window.location.href = "/records";
     });
+
   }
 
 
